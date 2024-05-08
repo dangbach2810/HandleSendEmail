@@ -5,36 +5,49 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-
+//Bachcoder1@
+//oguh rpmo inqr adkg
 namespace MailUtil
 {
     public class SendEmail
     {
-       
-        public async Task SendMail(string _from, string _to,
-            string _subject, string _body
-        )
+        public async Task<bool> SendMailGoogleSmtp(string _from, string _to, string _subject,
+                                                             string _body, string _gmailsend, string _gmailpassword)
         {
-            string _password = "bach1111@";
-            string _gmail = "locdangbach@gmail.com";
-            MailMessage message = new MailMessage(_from, _to, _subject, _body);
+
+            MailMessage message = new MailMessage(
+                from: _from,
+                to: _to,
+                subject: _subject,
+                body: _body
+            );
             message.BodyEncoding = System.Text.Encoding.UTF8;
             message.SubjectEncoding = System.Text.Encoding.UTF8;
             message.IsBodyHtml = true;
+            message.ReplyToList.Add(new MailAddress(_from));
             message.Sender = new MailAddress(_from);
-            using var smtpClient = new SmtpClient("smpt.gmail.com");
-            smtpClient.Port = 578;
-            smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new NetworkCredential(_gmail, _password);
-            try { 
-                await smtpClient.SendMailAsync(message);
-            }catch(Exception ex)
-            { 
+
+            // Tạo SmtpClient kết nối đến smtp.gmail.com
+            using SmtpClient client = new SmtpClient("smtp.gmail.com");
+            client.Port = 587;
+            client.EnableSsl = true;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential(_gmailsend, _gmailpassword);
+            
+            try
+            {
+                await client.SendMailAsync(message);
+                return true;
+            }catch (Exception ex)
+            {
                 Console.WriteLine(ex.ToString());
+                return false;
             }
-        
-        
-        }
+
+        } 
+   
     }
     
+
 }

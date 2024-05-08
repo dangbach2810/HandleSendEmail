@@ -13,6 +13,7 @@ namespace HandleSendEmail
         public static void Main(string[] args)
         {
             DataContextDataContext _context = new DataContextDataContext();
+            SendEmail sendEmail = new SendEmail();
             var listUserAcceptMail = _context.SettingEmails.ToList();
             var users = _context.Users.ToList();
             var tasks = _context.Tasks.ToList();
@@ -20,41 +21,47 @@ namespace HandleSendEmail
             foreach (var item in listUserAcceptMail)
             {
                 var user = users.Where(u => u.Id == item.Id).FirstOrDefault();
-                Console.WriteLine(user.Email);
-                Console.WriteLine(user.Lastname + " " + user.Firstname);
-                var userTasks = tasks.Where(t => t.CreatedBy == item.Id);
-                if (item.SendEmail == true)
+                if(user != null)
                 {
-                    if (item.SendDaily == true)
+                    Console.WriteLine(user.Email);
+                    Console.WriteLine(user.Lastname + " " + user.Firstname);
+                    var userTasks = tasks.Where(t => t.CreatedBy == item.Id);
+                    if (item.SendEmail == true)
                     {
-                        var countTaskSuccessByDay = userTasks.Where(t => t.IsActive == true).Count(t => t.CreatedOn.GetValueOrDefault().Date == DateTime.Now.Date);
-                        var countTaskOnGoingByDay = userTasks.Where(t => t.IsActive == false).Count(t => t.CreatedOn.GetValueOrDefault().Date == DateTime.Now.Date);
-                        Console.WriteLine(countTaskSuccessByDay);
-                        Console.WriteLine(countTaskOnGoingByDay);
-                    }
-                    if (item.SendWeekly == true && DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
-                    {
-                        var countTaskSuccessByWeek = userTasks.Where(t => t.IsActive == true).GroupBy(t => CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(t.CreatedOn.GetValueOrDefault().Date, CalendarWeekRule.FirstDay, DayOfWeek.Monday));
-                        var countTaskOnGoingByWeek = userTasks.Where(t => t.IsActive == false).GroupBy(t => CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(t.CreatedOn.GetValueOrDefault().Date, CalendarWeekRule.FirstDay, DayOfWeek.Monday));
-                    }
-                    if (item.SendMonthly == true && DateTime.Now.Day == DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
-                    {
-                        var countTaskSuccessByMonth = userTasks.Where(t => t.IsActive == true).GroupBy(t => new { t.CreatedOn.GetValueOrDefault().Year, t.CreatedOn.GetValueOrDefault().Date.Month });
-                        var countTaskOnGoingByMonth = userTasks.Where(t => t.IsActive == false).GroupBy(t => new { t.CreatedOn.GetValueOrDefault().Year, t.CreatedOn.GetValueOrDefault().Month });
-                    }
-                    if (item.SendYearly == true && DateTime.Now.DayOfYear == 365)
-                    {
-                        var countTaskSuccessByYear = userTasks.Where(t => t.IsActive == true).GroupBy(t => t.CreatedOn.GetValueOrDefault().Year);
-                        var countTaskOnGoingByYear = userTasks.Where(t => !t.IsActive == false).GroupBy(t => t.CreatedOn.GetValueOrDefault().Year);
-                    }
+                        if (item.SendDaily == true)
+                        {
+                            var countTaskSuccessByDay = userTasks.Where(t => t.IsActive == true).Count(t => t.CreatedOn.GetValueOrDefault().Date == DateTime.Now.Date);
+                            var countTaskOnGoingByDay = userTasks.Where(t => t.IsActive == false).Count(t => t.CreatedOn.GetValueOrDefault().Date == DateTime.Now.Date);
+                            Console.WriteLine(countTaskSuccessByDay);
+                            Console.WriteLine(countTaskOnGoingByDay);
+                        }
+                        if (item.SendWeekly == true && DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            var countTaskSuccessByWeek = userTasks.Where(t => t.IsActive == true).GroupBy(t => CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(t.CreatedOn.GetValueOrDefault().Date, CalendarWeekRule.FirstDay, DayOfWeek.Monday));
+                            var countTaskOnGoingByWeek = userTasks.Where(t => t.IsActive == false).GroupBy(t => CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(t.CreatedOn.GetValueOrDefault().Date, CalendarWeekRule.FirstDay, DayOfWeek.Monday));
+                        }
+                        if (item.SendMonthly == true && DateTime.Now.Day == DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month))
+                        {
+                            var countTaskSuccessByMonth = userTasks.Where(t => t.IsActive == true).GroupBy(t => new { t.CreatedOn.GetValueOrDefault().Year, t.CreatedOn.GetValueOrDefault().Date.Month });
+                            var countTaskOnGoingByMonth = userTasks.Where(t => t.IsActive == false).GroupBy(t => new { t.CreatedOn.GetValueOrDefault().Year, t.CreatedOn.GetValueOrDefault().Month });
+                        }
+                        if (item.SendYearly == true && DateTime.Now.DayOfYear == 365)
+                        {
+                            var countTaskSuccessByYear = userTasks.Where(t => t.IsActive == true).GroupBy(t => t.CreatedOn.GetValueOrDefault().Year);
+                            var countTaskOnGoingByYear = userTasks.Where(t => !t.IsActive == false).GroupBy(t => t.CreatedOn.GetValueOrDefault().Year);
+                        }
 
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Nguoi dung nay khong nhan Email");
+                    sendEmail.SendMailGoogleSmtp("locdangbach@gmail.com", "uyenssf@gmail.com", "Thông báo từ App quản lý dự án cá nhân(Cụ thể là app của Aiu aaa)", "Bạn chưa đăng ký nhận Email nhưng mình vẫn gửi hihi^^","locdangbach@gmail.com", "oguh rpmo inqr adkg");
+
+                    Console.WriteLine("Bạn chưa đăng ký nhận Email của hệ thống, nhưng mình vẫn gửi hihi ^^");
                 }
+                Console.ReadLine();
             }
-            Console.ReadLine();
+                
         }
         
     }
