@@ -1,23 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DbProjectManager" Class="DataContextDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-A86NIAL;Initial Catalog=DbProjectManager;User ID=sa;Encrypt=True;Trust Server Certificate=True" SettingsObjectName="HandleSendEmail.Properties.Settings" SettingsPropertyName="DbProjectManagerConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Cards" Member="Cards">
-    <Type Name="Card">
-      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="CreatedBy" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="TabId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="NumberMember" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Image" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="CreatedOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="TimeExpiry" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="EstimatedFinish" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Association Name="Card_Task" Member="Tasks" ThisKey="Id" OtherKey="CardId" Type="Task" />
-      <Association Name="User_Card" Member="User" ThisKey="CreatedBy" OtherKey="Id" Type="User" IsForeignKey="true" />
-    </Type>
-  </Table>
+  <Connection Mode="AppSettings" ConnectionString="Data Source=INTERN-LDBACH\MAYAO;Initial Catalog=DbProjectManager;Persist Security Info=True;User ID=sa;Encrypt=True;Trust Server Certificate=True" SettingsObjectName="HandleSendEmail.Properties.Settings" SettingsPropertyName="DbProjectManagerConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.[User]" Member="Users">
     <Type Name="User">
       <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -45,9 +27,11 @@
       <Column Name="LockoutEnd" Type="System.DateTimeOffset" DbType="DateTimeOffset" CanBeNull="true" />
       <Column Name="LockoutEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="AccessFailedCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="User_Card" Member="Cards" ThisKey="Id" OtherKey="CreatedBy" Type="Card" />
+      <Column Name="IsReceiveMail" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="User_Task" Member="Tasks" ThisKey="Id" OtherKey="CreatedBy" Type="Task" />
+      <Association Name="User_Card" Member="Cards" ThisKey="Id" OtherKey="CreatedBy" Type="Card" />
       <Association Name="User_SettingEmail" Member="SettingEmails" ThisKey="Id" OtherKey="UserId" Type="SettingEmail" />
+      <Association Name="User_Project" Member="Projects" ThisKey="Id" OtherKey="CreatedBy" Type="Project" />
     </Type>
   </Table>
   <Table Name="dbo.Tasks" Member="Tasks">
@@ -64,8 +48,26 @@
       <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Card_Task" Member="Card" ThisKey="CardId" OtherKey="Id" Type="Card" IsForeignKey="true" />
       <Association Name="User_Task" Member="User" ThisKey="CreatedBy" OtherKey="Id" Type="User" IsForeignKey="true" />
+      <Association Name="Card_Task" Member="Card" ThisKey="CardId" OtherKey="Id" Type="Card" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Cards" Member="Cards">
+    <Type Name="Card">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="TabId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NumberMember" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CreatedOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TimeExpiry" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="EstimatedFinish" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Association Name="Card_Task" Member="Tasks" ThisKey="Id" OtherKey="CardId" Type="Task" />
+      <Association Name="User_Card" Member="User" ThisKey="CreatedBy" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.SettingEmail" Member="SettingEmails">
@@ -78,6 +80,21 @@
       <Column Name="SendMonthly" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="SendYearly" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="User_SettingEmail" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Projects" Member="Projects">
+    <Type Name="Project">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NumberMember" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="[Order]" Member="Order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Background" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CreatedOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TimeExpiry" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="User_Project" Member="User" ThisKey="CreatedBy" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

@@ -26,11 +26,22 @@ namespace HandleSendEmail.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=INTERN-LDBACH\\MAYAO;Initial Catalog=DbProjectManager;User ID=sa;Passw" +
-            "ord=123123;Encrypt=True;TrustServerCertificate=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-A86NIAL;Initial Catalog=DbProjectManager;User ID=sa;Password=" +
+            "123123;Encrypt=True;TrustServerCertificate=True")]
         public string DbProjectManagerConnectionString {
             get {
                 return ((string)(this["DbProjectManagerConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=INTERN-LDBACH\\MAYAO;Initial Catalog=DbProjectManager;Persist Security" +
+            " Info=True;User ID=sa;Password=123123;Encrypt=True;TrustServerCertificate=True")]
+        public string DbProjectManagerConnectionString1 {
+            get {
+                return ((string)(this["DbProjectManagerConnectionString1"]));
             }
         }
     }

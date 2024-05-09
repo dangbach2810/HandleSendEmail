@@ -30,22 +30,25 @@ namespace HandleSendEmail
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertCard(Card instance);
-    partial void UpdateCard(Card instance);
-    partial void DeleteCard(Card instance);
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
     partial void InsertTask(Task instance);
     partial void UpdateTask(Task instance);
     partial void DeleteTask(Task instance);
+    partial void InsertCard(Card instance);
+    partial void UpdateCard(Card instance);
+    partial void DeleteCard(Card instance);
     partial void InsertSettingEmail(SettingEmail instance);
     partial void UpdateSettingEmail(SettingEmail instance);
     partial void DeleteSettingEmail(SettingEmail instance);
+    partial void InsertProject(Project instance);
+    partial void UpdateProject(Project instance);
+    partial void DeleteProject(Project instance);
     #endregion
 		
 		public DataContextDataContext() : 
-				base(global::HandleSendEmail.Properties.Settings.Default.DbProjectManagerConnectionString, mappingSource)
+				base(global::HandleSendEmail.Properties.Settings.Default.DbProjectManagerConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -74,14 +77,6 @@ namespace HandleSendEmail
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Card> Cards
-		{
-			get
-			{
-				return this.GetTable<Card>();
-			}
-		}
-		
 		public System.Data.Linq.Table<User> Users
 		{
 			get
@@ -98,6 +93,14 @@ namespace HandleSendEmail
 			}
 		}
 		
+		public System.Data.Linq.Table<Card> Cards
+		{
+			get
+			{
+				return this.GetTable<Card>();
+			}
+		}
+		
 		public System.Data.Linq.Table<SettingEmail> SettingEmails
 		{
 			get
@@ -105,400 +108,13 @@ namespace HandleSendEmail
 				return this.GetTable<SettingEmail>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cards")]
-	public partial class Card : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _Id;
-		
-		private System.Nullable<System.Guid> _CreatedBy;
-		
-		private System.Nullable<System.Guid> _TabId;
-		
-		private string _Name;
-		
-		private System.Nullable<int> _NumberMember;
-		
-		private System.Nullable<int> _Order;
-		
-		private string _Image;
-		
-		private System.Nullable<System.DateTime> _CreatedOn;
-		
-		private System.Nullable<System.DateTime> _TimeExpiry;
-		
-		private System.Nullable<bool> _IsActive;
-		
-		private string _Description;
-		
-		private System.Nullable<System.DateTime> _EstimatedFinish;
-		
-		private EntitySet<Task> _Tasks;
-		
-		private EntityRef<User> _User;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(System.Guid value);
-    partial void OnIdChanged();
-    partial void OnCreatedByChanging(System.Nullable<System.Guid> value);
-    partial void OnCreatedByChanged();
-    partial void OnTabIdChanging(System.Nullable<System.Guid> value);
-    partial void OnTabIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnNumberMemberChanging(System.Nullable<int> value);
-    partial void OnNumberMemberChanged();
-    partial void OnOrderChanging(System.Nullable<int> value);
-    partial void OnOrderChanged();
-    partial void OnImageChanging(string value);
-    partial void OnImageChanged();
-    partial void OnCreatedOnChanging(System.Nullable<System.DateTime> value);
-    partial void OnCreatedOnChanged();
-    partial void OnTimeExpiryChanging(System.Nullable<System.DateTime> value);
-    partial void OnTimeExpiryChanged();
-    partial void OnIsActiveChanging(System.Nullable<bool> value);
-    partial void OnIsActiveChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnEstimatedFinishChanging(System.Nullable<System.DateTime> value);
-    partial void OnEstimatedFinishChanged();
-    #endregion
-		
-		public Card()
-		{
-			this._Tasks = new EntitySet<Task>(new Action<Task>(this.attach_Tasks), new Action<Task>(this.detach_Tasks));
-			this._User = default(EntityRef<User>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid Id
+		public System.Data.Linq.Table<Project> Projects
 		{
 			get
 			{
-				return this._Id;
+				return this.GetTable<Project>();
 			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> CreatedBy
-		{
-			get
-			{
-				return this._CreatedBy;
-			}
-			set
-			{
-				if ((this._CreatedBy != value))
-				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCreatedByChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedBy = value;
-					this.SendPropertyChanged("CreatedBy");
-					this.OnCreatedByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TabId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> TabId
-		{
-			get
-			{
-				return this._TabId;
-			}
-			set
-			{
-				if ((this._TabId != value))
-				{
-					this.OnTabIdChanging(value);
-					this.SendPropertyChanging();
-					this._TabId = value;
-					this.SendPropertyChanged("TabId");
-					this.OnTabIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumberMember", DbType="Int")]
-		public System.Nullable<int> NumberMember
-		{
-			get
-			{
-				return this._NumberMember;
-			}
-			set
-			{
-				if ((this._NumberMember != value))
-				{
-					this.OnNumberMemberChanging(value);
-					this.SendPropertyChanging();
-					this._NumberMember = value;
-					this.SendPropertyChanged("NumberMember");
-					this.OnNumberMemberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Order]", Storage="_Order", DbType="Int")]
-		public System.Nullable<int> Order
-		{
-			get
-			{
-				return this._Order;
-			}
-			set
-			{
-				if ((this._Order != value))
-				{
-					this.OnOrderChanging(value);
-					this.SendPropertyChanging();
-					this._Order = value;
-					this.SendPropertyChanged("Order");
-					this.OnOrderChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="NVarChar(255)")]
-		public string Image
-		{
-			get
-			{
-				return this._Image;
-			}
-			set
-			{
-				if ((this._Image != value))
-				{
-					this.OnImageChanging(value);
-					this.SendPropertyChanging();
-					this._Image = value;
-					this.SendPropertyChanged("Image");
-					this.OnImageChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreatedOn
-		{
-			get
-			{
-				return this._CreatedOn;
-			}
-			set
-			{
-				if ((this._CreatedOn != value))
-				{
-					this.OnCreatedOnChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedOn = value;
-					this.SendPropertyChanged("CreatedOn");
-					this.OnCreatedOnChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeExpiry", DbType="DateTime")]
-		public System.Nullable<System.DateTime> TimeExpiry
-		{
-			get
-			{
-				return this._TimeExpiry;
-			}
-			set
-			{
-				if ((this._TimeExpiry != value))
-				{
-					this.OnTimeExpiryChanging(value);
-					this.SendPropertyChanging();
-					this._TimeExpiry = value;
-					this.SendPropertyChanged("TimeExpiry");
-					this.OnTimeExpiryChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsActive", DbType="Bit")]
-		public System.Nullable<bool> IsActive
-		{
-			get
-			{
-				return this._IsActive;
-			}
-			set
-			{
-				if ((this._IsActive != value))
-				{
-					this.OnIsActiveChanging(value);
-					this.SendPropertyChanging();
-					this._IsActive = value;
-					this.SendPropertyChanged("IsActive");
-					this.OnIsActiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EstimatedFinish", DbType="DateTime2")]
-		public System.Nullable<System.DateTime> EstimatedFinish
-		{
-			get
-			{
-				return this._EstimatedFinish;
-			}
-			set
-			{
-				if ((this._EstimatedFinish != value))
-				{
-					this.OnEstimatedFinishChanging(value);
-					this.SendPropertyChanging();
-					this._EstimatedFinish = value;
-					this.SendPropertyChanged("EstimatedFinish");
-					this.OnEstimatedFinishChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Card_Task", Storage="_Tasks", ThisKey="Id", OtherKey="CardId")]
-		public EntitySet<Task> Tasks
-		{
-			get
-			{
-				return this._Tasks;
-			}
-			set
-			{
-				this._Tasks.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Card", Storage="_User", ThisKey="CreatedBy", OtherKey="Id", IsForeignKey=true)]
-		public User User
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.Cards.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.Cards.Add(this);
-						this._CreatedBy = value.Id;
-					}
-					else
-					{
-						this._CreatedBy = default(Nullable<System.Guid>);
-					}
-					this.SendPropertyChanged("User");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Tasks(Task entity)
-		{
-			this.SendPropertyChanging();
-			entity.Card = this;
-		}
-		
-		private void detach_Tasks(Task entity)
-		{
-			this.SendPropertyChanging();
-			entity.Card = null;
 		}
 	}
 	
@@ -558,11 +174,15 @@ namespace HandleSendEmail
 		
 		private int _AccessFailedCount;
 		
-		private EntitySet<Card> _Cards;
+		private System.Nullable<bool> _IsReceiveMail;
 		
 		private EntitySet<Task> _Tasks;
 		
+		private EntitySet<Card> _Cards;
+		
 		private EntitySet<SettingEmail> _SettingEmails;
+		
+		private EntitySet<Project> _Projects;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -618,13 +238,16 @@ namespace HandleSendEmail
     partial void OnLockoutEnabledChanged();
     partial void OnAccessFailedCountChanging(int value);
     partial void OnAccessFailedCountChanged();
+    partial void OnIsReceiveMailChanging(System.Nullable<bool> value);
+    partial void OnIsReceiveMailChanged();
     #endregion
 		
 		public User()
 		{
-			this._Cards = new EntitySet<Card>(new Action<Card>(this.attach_Cards), new Action<Card>(this.detach_Cards));
 			this._Tasks = new EntitySet<Task>(new Action<Task>(this.attach_Tasks), new Action<Task>(this.detach_Tasks));
+			this._Cards = new EntitySet<Card>(new Action<Card>(this.attach_Cards), new Action<Card>(this.detach_Cards));
 			this._SettingEmails = new EntitySet<SettingEmail>(new Action<SettingEmail>(this.attach_SettingEmails), new Action<SettingEmail>(this.detach_SettingEmails));
+			this._Projects = new EntitySet<Project>(new Action<Project>(this.attach_Projects), new Action<Project>(this.detach_Projects));
 			OnCreated();
 		}
 		
@@ -1128,16 +751,23 @@ namespace HandleSendEmail
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Card", Storage="_Cards", ThisKey="Id", OtherKey="CreatedBy")]
-		public EntitySet<Card> Cards
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsReceiveMail", DbType="Bit")]
+		public System.Nullable<bool> IsReceiveMail
 		{
 			get
 			{
-				return this._Cards;
+				return this._IsReceiveMail;
 			}
 			set
 			{
-				this._Cards.Assign(value);
+				if ((this._IsReceiveMail != value))
+				{
+					this.OnIsReceiveMailChanging(value);
+					this.SendPropertyChanging();
+					this._IsReceiveMail = value;
+					this.SendPropertyChanged("IsReceiveMail");
+					this.OnIsReceiveMailChanged();
+				}
 			}
 		}
 		
@@ -1154,6 +784,19 @@ namespace HandleSendEmail
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Card", Storage="_Cards", ThisKey="Id", OtherKey="CreatedBy")]
+		public EntitySet<Card> Cards
+		{
+			get
+			{
+				return this._Cards;
+			}
+			set
+			{
+				this._Cards.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_SettingEmail", Storage="_SettingEmails", ThisKey="Id", OtherKey="UserId")]
 		public EntitySet<SettingEmail> SettingEmails
 		{
@@ -1164,6 +807,19 @@ namespace HandleSendEmail
 			set
 			{
 				this._SettingEmails.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Project", Storage="_Projects", ThisKey="Id", OtherKey="CreatedBy")]
+		public EntitySet<Project> Projects
+		{
+			get
+			{
+				return this._Projects;
+			}
+			set
+			{
+				this._Projects.Assign(value);
 			}
 		}
 		
@@ -1187,18 +843,6 @@ namespace HandleSendEmail
 			}
 		}
 		
-		private void attach_Cards(Card entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_Cards(Card entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
 		private void attach_Tasks(Task entity)
 		{
 			this.SendPropertyChanging();
@@ -1211,6 +855,18 @@ namespace HandleSendEmail
 			entity.User = null;
 		}
 		
+		private void attach_Cards(Card entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Cards(Card entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
 		private void attach_SettingEmails(SettingEmail entity)
 		{
 			this.SendPropertyChanging();
@@ -1218,6 +874,18 @@ namespace HandleSendEmail
 		}
 		
 		private void detach_SettingEmails(SettingEmail entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_Projects(Project entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Projects(Project entity)
 		{
 			this.SendPropertyChanging();
 			entity.User = null;
@@ -1254,9 +922,9 @@ namespace HandleSendEmail
 		
 		private System.Nullable<bool> _IsActive;
 		
-		private EntityRef<Card> _Card;
-		
 		private EntityRef<User> _User;
+		
+		private EntityRef<Card> _Card;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1290,8 +958,8 @@ namespace HandleSendEmail
 		
 		public Task()
 		{
-			this._Card = default(EntityRef<Card>);
 			this._User = default(EntityRef<User>);
+			this._Card = default(EntityRef<Card>);
 			OnCreated();
 		}
 		
@@ -1543,40 +1211,6 @@ namespace HandleSendEmail
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Card_Task", Storage="_Card", ThisKey="CardId", OtherKey="Id", IsForeignKey=true)]
-		public Card Card
-		{
-			get
-			{
-				return this._Card.Entity;
-			}
-			set
-			{
-				Card previousValue = this._Card.Entity;
-				if (((previousValue != value) 
-							|| (this._Card.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Card.Entity = null;
-						previousValue.Tasks.Remove(this);
-					}
-					this._Card.Entity = value;
-					if ((value != null))
-					{
-						value.Tasks.Add(this);
-						this._CardId = value.Id;
-					}
-					else
-					{
-						this._CardId = default(Nullable<System.Guid>);
-					}
-					this.SendPropertyChanged("Card");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Task", Storage="_User", ThisKey="CreatedBy", OtherKey="Id", IsForeignKey=true)]
 		public User User
 		{
@@ -1611,6 +1245,40 @@ namespace HandleSendEmail
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Card_Task", Storage="_Card", ThisKey="CardId", OtherKey="Id", IsForeignKey=true)]
+		public Card Card
+		{
+			get
+			{
+				return this._Card.Entity;
+			}
+			set
+			{
+				Card previousValue = this._Card.Entity;
+				if (((previousValue != value) 
+							|| (this._Card.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Card.Entity = null;
+						previousValue.Tasks.Remove(this);
+					}
+					this._Card.Entity = value;
+					if ((value != null))
+					{
+						value.Tasks.Add(this);
+						this._CardId = value.Id;
+					}
+					else
+					{
+						this._CardId = default(Nullable<System.Guid>);
+					}
+					this.SendPropertyChanged("Card");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1629,6 +1297,401 @@ namespace HandleSendEmail
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cards")]
+	public partial class Card : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Nullable<System.Guid> _CreatedBy;
+		
+		private System.Nullable<System.Guid> _TabId;
+		
+		private string _Name;
+		
+		private System.Nullable<int> _NumberMember;
+		
+		private System.Nullable<int> _Order;
+		
+		private string _Image;
+		
+		private System.Nullable<System.DateTime> _CreatedOn;
+		
+		private System.Nullable<System.DateTime> _TimeExpiry;
+		
+		private System.Nullable<bool> _IsActive;
+		
+		private string _Description;
+		
+		private System.Nullable<System.DateTime> _EstimatedFinish;
+		
+		private EntitySet<Task> _Tasks;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnCreatedByChanging(System.Nullable<System.Guid> value);
+    partial void OnCreatedByChanged();
+    partial void OnTabIdChanging(System.Nullable<System.Guid> value);
+    partial void OnTabIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnNumberMemberChanging(System.Nullable<int> value);
+    partial void OnNumberMemberChanged();
+    partial void OnOrderChanging(System.Nullable<int> value);
+    partial void OnOrderChanged();
+    partial void OnImageChanging(string value);
+    partial void OnImageChanged();
+    partial void OnCreatedOnChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreatedOnChanged();
+    partial void OnTimeExpiryChanging(System.Nullable<System.DateTime> value);
+    partial void OnTimeExpiryChanged();
+    partial void OnIsActiveChanging(System.Nullable<bool> value);
+    partial void OnIsActiveChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnEstimatedFinishChanging(System.Nullable<System.DateTime> value);
+    partial void OnEstimatedFinishChanged();
+    #endregion
+		
+		public Card()
+		{
+			this._Tasks = new EntitySet<Task>(new Action<Task>(this.attach_Tasks), new Action<Task>(this.detach_Tasks));
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCreatedByChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedBy = value;
+					this.SendPropertyChanged("CreatedBy");
+					this.OnCreatedByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TabId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> TabId
+		{
+			get
+			{
+				return this._TabId;
+			}
+			set
+			{
+				if ((this._TabId != value))
+				{
+					this.OnTabIdChanging(value);
+					this.SendPropertyChanging();
+					this._TabId = value;
+					this.SendPropertyChanged("TabId");
+					this.OnTabIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumberMember", DbType="Int")]
+		public System.Nullable<int> NumberMember
+		{
+			get
+			{
+				return this._NumberMember;
+			}
+			set
+			{
+				if ((this._NumberMember != value))
+				{
+					this.OnNumberMemberChanging(value);
+					this.SendPropertyChanging();
+					this._NumberMember = value;
+					this.SendPropertyChanged("NumberMember");
+					this.OnNumberMemberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Order]", Storage="_Order", DbType="Int")]
+		public System.Nullable<int> Order
+		{
+			get
+			{
+				return this._Order;
+			}
+			set
+			{
+				if ((this._Order != value))
+				{
+					this.OnOrderChanging(value);
+					this.SendPropertyChanging();
+					this._Order = value;
+					this.SendPropertyChanged("Order");
+					this.OnOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="NVarChar(255)")]
+		public string Image
+		{
+			get
+			{
+				return this._Image;
+			}
+			set
+			{
+				if ((this._Image != value))
+				{
+					this.OnImageChanging(value);
+					this.SendPropertyChanging();
+					this._Image = value;
+					this.SendPropertyChanged("Image");
+					this.OnImageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this._CreatedOn;
+			}
+			set
+			{
+				if ((this._CreatedOn != value))
+				{
+					this.OnCreatedOnChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedOn = value;
+					this.SendPropertyChanged("CreatedOn");
+					this.OnCreatedOnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeExpiry", DbType="DateTime")]
+		public System.Nullable<System.DateTime> TimeExpiry
+		{
+			get
+			{
+				return this._TimeExpiry;
+			}
+			set
+			{
+				if ((this._TimeExpiry != value))
+				{
+					this.OnTimeExpiryChanging(value);
+					this.SendPropertyChanging();
+					this._TimeExpiry = value;
+					this.SendPropertyChanged("TimeExpiry");
+					this.OnTimeExpiryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsActive", DbType="Bit")]
+		public System.Nullable<bool> IsActive
+		{
+			get
+			{
+				return this._IsActive;
+			}
+			set
+			{
+				if ((this._IsActive != value))
+				{
+					this.OnIsActiveChanging(value);
+					this.SendPropertyChanging();
+					this._IsActive = value;
+					this.SendPropertyChanged("IsActive");
+					this.OnIsActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EstimatedFinish", DbType="DateTime2")]
+		public System.Nullable<System.DateTime> EstimatedFinish
+		{
+			get
+			{
+				return this._EstimatedFinish;
+			}
+			set
+			{
+				if ((this._EstimatedFinish != value))
+				{
+					this.OnEstimatedFinishChanging(value);
+					this.SendPropertyChanging();
+					this._EstimatedFinish = value;
+					this.SendPropertyChanged("EstimatedFinish");
+					this.OnEstimatedFinishChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Card_Task", Storage="_Tasks", ThisKey="Id", OtherKey="CardId")]
+		public EntitySet<Task> Tasks
+		{
+			get
+			{
+				return this._Tasks;
+			}
+			set
+			{
+				this._Tasks.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Card", Storage="_User", ThisKey="CreatedBy", OtherKey="Id", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Cards.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Cards.Add(this);
+						this._CreatedBy = value.Id;
+					}
+					else
+					{
+						this._CreatedBy = default(Nullable<System.Guid>);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Tasks(Task entity)
+		{
+			this.SendPropertyChanging();
+			entity.Card = this;
+		}
+		
+		private void detach_Tasks(Task entity)
+		{
+			this.SendPropertyChanging();
+			entity.Card = null;
 		}
 	}
 	
@@ -1852,6 +1915,325 @@ namespace HandleSendEmail
 					else
 					{
 						this._UserId = default(System.Guid);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Projects")]
+	public partial class Project : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _Id;
+		
+		private System.Nullable<System.Guid> _CreatedBy;
+		
+		private string _Name;
+		
+		private System.Nullable<int> _NumberMember;
+		
+		private string _Image;
+		
+		private System.Nullable<int> _Order;
+		
+		private System.Nullable<int> _Background;
+		
+		private System.Nullable<System.DateTime> _CreatedOn;
+		
+		private System.Nullable<System.DateTime> _TimeExpiry;
+		
+		private System.Nullable<bool> _IsActive;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(System.Guid value);
+    partial void OnIdChanged();
+    partial void OnCreatedByChanging(System.Nullable<System.Guid> value);
+    partial void OnCreatedByChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnNumberMemberChanging(System.Nullable<int> value);
+    partial void OnNumberMemberChanged();
+    partial void OnImageChanging(string value);
+    partial void OnImageChanged();
+    partial void OnOrderChanging(System.Nullable<int> value);
+    partial void OnOrderChanged();
+    partial void OnBackgroundChanging(System.Nullable<int> value);
+    partial void OnBackgroundChanged();
+    partial void OnCreatedOnChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreatedOnChanged();
+    partial void OnTimeExpiryChanging(System.Nullable<System.DateTime> value);
+    partial void OnTimeExpiryChanged();
+    partial void OnIsActiveChanging(System.Nullable<bool> value);
+    partial void OnIsActiveChanged();
+    #endregion
+		
+		public Project()
+		{
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCreatedByChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedBy = value;
+					this.SendPropertyChanged("CreatedBy");
+					this.OnCreatedByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumberMember", DbType="Int")]
+		public System.Nullable<int> NumberMember
+		{
+			get
+			{
+				return this._NumberMember;
+			}
+			set
+			{
+				if ((this._NumberMember != value))
+				{
+					this.OnNumberMemberChanging(value);
+					this.SendPropertyChanging();
+					this._NumberMember = value;
+					this.SendPropertyChanged("NumberMember");
+					this.OnNumberMemberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="NVarChar(255)")]
+		public string Image
+		{
+			get
+			{
+				return this._Image;
+			}
+			set
+			{
+				if ((this._Image != value))
+				{
+					this.OnImageChanging(value);
+					this.SendPropertyChanging();
+					this._Image = value;
+					this.SendPropertyChanged("Image");
+					this.OnImageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Order]", Storage="_Order", DbType="Int")]
+		public System.Nullable<int> Order
+		{
+			get
+			{
+				return this._Order;
+			}
+			set
+			{
+				if ((this._Order != value))
+				{
+					this.OnOrderChanging(value);
+					this.SendPropertyChanging();
+					this._Order = value;
+					this.SendPropertyChanged("Order");
+					this.OnOrderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Background", DbType="Int")]
+		public System.Nullable<int> Background
+		{
+			get
+			{
+				return this._Background;
+			}
+			set
+			{
+				if ((this._Background != value))
+				{
+					this.OnBackgroundChanging(value);
+					this.SendPropertyChanging();
+					this._Background = value;
+					this.SendPropertyChanged("Background");
+					this.OnBackgroundChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this._CreatedOn;
+			}
+			set
+			{
+				if ((this._CreatedOn != value))
+				{
+					this.OnCreatedOnChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedOn = value;
+					this.SendPropertyChanged("CreatedOn");
+					this.OnCreatedOnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeExpiry", DbType="DateTime")]
+		public System.Nullable<System.DateTime> TimeExpiry
+		{
+			get
+			{
+				return this._TimeExpiry;
+			}
+			set
+			{
+				if ((this._TimeExpiry != value))
+				{
+					this.OnTimeExpiryChanging(value);
+					this.SendPropertyChanging();
+					this._TimeExpiry = value;
+					this.SendPropertyChanged("TimeExpiry");
+					this.OnTimeExpiryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsActive", DbType="Bit")]
+		public System.Nullable<bool> IsActive
+		{
+			get
+			{
+				return this._IsActive;
+			}
+			set
+			{
+				if ((this._IsActive != value))
+				{
+					this.OnIsActiveChanging(value);
+					this.SendPropertyChanging();
+					this._IsActive = value;
+					this.SendPropertyChanged("IsActive");
+					this.OnIsActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Project", Storage="_User", ThisKey="CreatedBy", OtherKey="Id", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Projects.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Projects.Add(this);
+						this._CreatedBy = value.Id;
+					}
+					else
+					{
+						this._CreatedBy = default(Nullable<System.Guid>);
 					}
 					this.SendPropertyChanged("User");
 				}
